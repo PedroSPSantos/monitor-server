@@ -9,7 +9,6 @@ const act_mapping = {
   "QW-ACT-R16": QW_ACT_R16,
   "QW-ACT-R17": QW_ACT_R17,
   "QW-ACT-R19": QW_ACT_R19,
-  "QW-ACT-R35": QW_ACT_R35,
   "QW-ACT-R37": QW_ACT_R37,
   "QW-ACT-R68": QW_ACT_R68,
 };
@@ -24,7 +23,6 @@ const wcag_mapping = {
   "QW-WCAG-T9": QW_HTML_T9,
   "QW-WCAG-T14": QW_HTML_T17,
   "QW-WCAG-T15": QW_HTML_T19,
-  "QW-WCAG-T16": QW_HTML_T20,
   "QW-WCAG-T17": QW_HTML_T25,
   "QW-WCAG-T32": QW_HTML_T28,
   "QW-WCAG-T18": QW_HTML_T30,
@@ -244,26 +242,6 @@ function QW_ACT_R19(elements: any, results: any, nodes: any, rule: any): void {
   }
 }
 
-function QW_ACT_R35(elements: any, results: any, nodes: any, rule: any): void {
-  if (rule.metadata.outcome === "passed") {
-    addToElements(elements, "hxHasAName", rule.metadata.passed);
-    addToResults(results, "heading_01");
-    addToNodes(
-      nodes,
-      "hxHasAName",
-      rule.results.filter((r: any) => r.verdict === "passed")
-    );
-  } else if (rule.metadata.outcome === "failed") {
-    addToElements(elements, "hxWithoutAName", rule.metadata.failed);
-    addToResults(results, "heading_02");
-    addToNodes(
-      nodes,
-      "hxWithoutAName",
-      rule.results.filter((r: any) => r.verdict === "failed")
-    );
-  }
-}
-
 function QW_ACT_R37(elements: any, results: any, nodes: any, rule: any): void {
   if (rule.metadata.outcome === "failed") {
     addToElements(elements, "colorContrast", rule.metadata.failed);
@@ -474,7 +452,7 @@ function QW_HTML_T19(
   }
 }
 
-function QW_HTML_T20(
+/*function QW_HTML_T20(
   elements: any,
   results: any,
   nodes: any,
@@ -489,22 +467,17 @@ function QW_HTML_T20(
       "w3cValidatorErrors",
       technique.results.filter((r: any) => r.verdict === "failed")
     );
-  } else if (
-    technique.metadata.outcome === "passed" ||
-    technique.metadata.outcome === "warning"
-  ) {
+  } else if (technique.metadata.outcome === "passed") {
     addToElements(elements, "w3cValidator", "true");
-    addToElements(elements, "w3cValidatorErrors", 0);
+    addToElements(elements, "w3cValidatorErrors", undefined);
     addToResults(results, "w3c_validator_01a");
     addToNodes(
       nodes,
       "w3cValidatorErrors",
-      technique.results.filter(
-        (r: any) => r.verdict === "passed" || r.verdict === "warning"
-      )
+      technique.results.filter((r: any) => r.verdict === "passed")
     );
   }
-}
+}*/
 
 function QW_HTML_T25(
   elements: any,

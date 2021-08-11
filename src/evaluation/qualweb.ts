@@ -2,11 +2,11 @@ import { QualWeb, EvaluationReport, QualwebOptions } from "@qualweb/core";
 
 export async function evaluate(params: any): Promise<any> {
   const options: QualwebOptions = {
-    execute: {
+    "execute":{
       act: true,
       wcag: true,
       bp: true,
-      counter: true,
+      counter: true
     },
     "act-rules": {
       rules: [
@@ -21,7 +21,6 @@ export async function evaluate(params: any): Promise<any> {
         "QW-ACT-R17",
         "QW-ACT-R18",
         "QW-ACT-R19",
-        "QW-ACT-R35",
         "QW-ACT-R37",
         "QW-ACT-R68",
       ],
@@ -78,14 +77,14 @@ export async function evaluate(params: any): Promise<any> {
   };
 
   if (params.url || params.urls) {
-    options["wcag-techniques"].techniques.push("QW-WCAG-T16");
+    //options["wcag-techniques"].techniques.push("QW-WCAG-T16");
     options.url = params.url;
     options.urls = params.urls;
   } else if (params.html) {
     options.html = params.html;
   }
-
-  options["validator"] = "http://127.0.0.1:5555/"; //"http://194.117.20.242/validate/";
+ 
+  options["validator"] = "http://194.117.20.242/validate/";
 
   const qualweb = new QualWeb();
   await qualweb.start(
@@ -125,15 +124,3 @@ export async function evaluate(params: any): Promise<any> {
   return reports;
 }
 
-function timeExceeded(qualweb: QualWeb, options: QualwebOptions): Promise<any> {
-  return new Promise((resolve, reject) => {
-    const exceeded = setTimeout(() => {
-      reject("Time exceeded for evaluation");
-    }, 1000 * 60 * 2);
-
-    qualweb.evaluate(options).then((reports) => {
-      clearTimeout(exceeded);
-      resolve(reports);
-    });
-  });
-}
